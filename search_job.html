@@ -113,15 +113,15 @@
 									</div>
 								</header>
 								<span class="image featured"><img src="images/im03.jpg" alt="Credit to Markus Winkler http://unsplash.com" /></span>
-								<p>The package <a href= "https://www.rdocumentation.org/packages/rvest/versions/1.0.2" target="_blank">Rvest</a> makes it easy to  Harvest (Scrape) Web Pages. In this example we are searching for a data scientist rol in Madrid and creating a dataframe containing the link to the job offer, the job title, the company offering the job and a description</p>
+								<p>The package <a href= "https://www.rdocumentation.org/packages/rvest/versions/1.0.2" target="_blank">Rvest</a> makes it easy to  Harvest (Scrape) Web Pages. In this example we are searching for a data scientist rol in Madrid and creating a dataframe containing the link to the job offer, the job title, the company offering the job and a description.</p>
 								<p>Adapted from <a href="https://thatdatatho.com/web-scraping-indeed-jobs-r-rvest/" class="uri">https://thatdatatho.com/web-scraping-indeed-jobs-r-rvest/</a></p>
-		<pre class="r"><code>library(tidyverse)
+		<pre class="r"><code>
 		library(tidyverse)
 		library(rvest)
 		library(xml2)</code></pre>
 								
 
-	#Defining a sequence with the number of pages to scrap.	In this proof of concept we look at the # of pages manually.
+	#Defining a sequence with the number of pages to scrape. In this proof of concept we look at the number of pages manually.
 		<pre class="r"><code> page_result_start &lt;- 0 # starting page 
 		page_result_end &lt;- 40 # last page results
 		page_results &lt;- seq(from = page_result_start, to = page_result_end, by = 10)
@@ -133,10 +133,9 @@
 		first_page_url &lt;- paste0(&quot;https://es.indeed.com/jobs?q=%22&quot;,title,&quot;%22&amp;l=&quot;,city)</code></pre>
 
 	# Function to extract query results (read_html), and create a dataframe with the desired fields. 
-	<pre class="r"><code>
-	for(i in seq_along(page_results)) {
+	<pre class="r"><code>for(i in seq_along(page_results)) {
 		    url &lt;- paste0(first_page_url, &quot;&amp;start=&quot;, page_results[i])
-		    #parse the page: read in the code from the webpage and break it down into different elements (&lt;div&gt;, &lt;span&gt;, &lt;p&gt;, etc.) for you to analyse it.
+		    #parse the page: read in the code from the webpage and break it down into different elements (&lt;div&gt;, &lt;span&gt;, &lt;p&gt;, etc.).
 		    page_full &lt;- xml2::read_html(url)    
 		    # Sys.sleep pauses R for random number of seconds before it resumes
 		    # Putting it there avoids error messages such as &quot;Error in open.connection(con, &quot;rb&quot;) : Timeout was reached&quot;
@@ -186,7 +185,8 @@
 	<pre class="r"><code>
 	full_df &lt;- full_df %&gt;% distinct(job_description, .keep_all= TRUE)
 
-	as_tibble (full_df)
+	as_tibble (full_df)</code></pre>
+	#print results
 	<pre><code>## # A tibble: 57 x 4
 	##    job_title                company_name     links            job_description                 
 	##    &lt;chr&gt;                    &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;                           
